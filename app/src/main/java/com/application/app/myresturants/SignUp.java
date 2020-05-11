@@ -21,7 +21,7 @@ TextView getStart;
         getStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SignUp.this,Main2Activity.class);
+                Intent i = new Intent(SignUp.this, RestaurantActivity.class);
                 startActivity(i);
             }
         });

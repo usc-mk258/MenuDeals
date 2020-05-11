@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 Button signup_restaurant,getSignup_customer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ Button signup_restaurant,getSignup_customer;
         signup_restaurant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this,SignUp.class);
+                Intent i = new Intent(LoginActivity.this,SignUp.class);
                 startActivity(i);
             }
         });
@@ -30,7 +30,7 @@ Button signup_restaurant,getSignup_customer;
         getSignup_customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this,SignUpAsCustomer.class);
+                Intent i = new Intent(LoginActivity.this,SignUpAsCustomer.class);
                 startActivity(i);
             }
         });

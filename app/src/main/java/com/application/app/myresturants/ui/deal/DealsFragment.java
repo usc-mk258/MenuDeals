@@ -21,13 +21,13 @@ import java.util.ArrayList;
 
 public class DealsFragment extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
+    private DealsViewModel galleryViewModel;
 private RecyclerView deals;
 private DealAdapter dataAdapter;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
+        View root = inflater.inflate(R.layout.fragment_deal, container, false);
        // final TextView textView = root.findViewById(R.id.text_gallery);
 
         deals = root.findViewById(R.id.deal);
