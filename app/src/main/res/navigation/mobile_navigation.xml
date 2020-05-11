@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.application.app.myresturants.ui.gallery.GalleryFragment"
+        android:name="com.application.app.myresturants.ui.deal.DealsFragment"
         android:label="@string/menu_deal"
         tools:layout="@layout/fragment_gallery" />
 

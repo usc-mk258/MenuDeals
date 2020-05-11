@@ -1,17 +1,13 @@
-package com.application.app.myresturants.ui.gallery;
+package com.application.app.myresturants.ui.deal;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.lifecycle.ViewModelProvider;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,11 +16,10 @@ import com.application.app.myresturants.DealAdapter;
 import com.application.app.myresturants.R;
 import com.application.app.myresturants.models.DealModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-public class GalleryFragment extends Fragment {
+public class DealsFragment extends Fragment {
 
     private GalleryViewModel galleryViewModel;
 private RecyclerView deals;

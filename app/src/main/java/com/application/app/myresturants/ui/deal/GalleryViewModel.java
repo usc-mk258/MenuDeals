@@ -1,4 +1,4 @@
-package com.application.app.myresturants.ui.gallery;
+package com.application.app.myresturants.ui.deal;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
