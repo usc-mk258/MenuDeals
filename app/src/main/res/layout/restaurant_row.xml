@@ -40,15 +40,16 @@
 
     <Button
         android:id="@+id/icon"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="P"
-        android:textSize="28sp"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_button"
+        android:text="P"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,6 +74,18 @@
         android:text="April 14, 2020"
         app:layout_constraintStart_toStartOf="@+id/Header"
         app:layout_constraintTop_toBottomOf="@+id/Header" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:srcCompat="@drawable/ic_star_black_24dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

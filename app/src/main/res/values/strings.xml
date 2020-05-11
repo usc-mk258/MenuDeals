@@ -20,4 +20,7 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
+    <string name="title_activity_deal_list">DealList</string>
+    <string name="tab_text_1">Deals</string>
+    <string name="tab_text_2">Reviews</string>
 </resources>

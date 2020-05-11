@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
 
         int numberOfColumns = 2;
         restaurants.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
-        dataAdapter  = new RestaurantAdapter( dummyArray);
+        dataAdapter  = new RestaurantAdapter( dummyArray,getActivity());
         restaurants.setAdapter(dataAdapter);
 
 

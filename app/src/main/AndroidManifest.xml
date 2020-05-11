@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".DealList"
+            android:label="@string/title_activity_deal_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".CustomerActivity"
             android:label="@string/title_activity_customer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddDeals" />
         <activity
             android:name=".RestaurantActivity"
@@ -29,6 +33,6 @@
         </activity>
     </application>
 
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

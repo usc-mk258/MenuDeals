@@ -1,34 +1,31 @@
 package com.application.app.myresturants;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.app.myresturants.models.DealModel;
+import com.application.app.myresturants.models.OrderModel;
 
 import java.util.ArrayList;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder>{
+public class DealListAdapter extends RecyclerView.Adapter<DealListAdapter.ViewHolder>{
     private ArrayList<DealModel> listdata;
-    private Context context;
 
     // RecyclerView recyclerView;
-    public RestaurantAdapter(ArrayList<DealModel> listdata, Context context) {
+    public DealListAdapter(ArrayList<DealModel> listdata) {
         this.listdata = listdata;
-        this.context = context;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View listItem= layoutInflater.inflate(R.layout.restaurant_row, parent, false);
+        View listItem= layoutInflater.inflate(R.layout.layout_deal_list_row, parent, false);
         ViewHolder viewHolder = new ViewHolder(listItem);
         return viewHolder;
     }
@@ -36,18 +33,16 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final DealModel myListData = listdata.get(position);
-      /*  holder.tvOrderNum.setText(listdata.get(position).getOrderNumber());
+       /* holder.tvOrderNum.setText(listdata.get(position).getOrderNumber());
         holder.tvCustomer.setText(listdata.get(position).getOrderedBy());
         holder.tvProduct.setText(listdata.get(position).getProduct());
-        holder.tvStatus.setText(listdata.get(position).getStatus());
-*/
+        holder.tvStatus.setText(listdata.get(position).getStatus());*/
+
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context,DealList.class);
-                context.startActivity(i);
-               // Toast.makeText(view.getContext(),"click on item: "+position ,Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(),"click on item: "+position ,Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -60,17 +55,20 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView imageView;
-        public TextView tvProduct,tvPrice;
+    //    public ImageView imageView;
+        public TextView tvOrderNum,tvProduct,tvCustomer,tvStatus;
         public ConstraintLayout linearLayout;
         public ViewHolder(View itemView) {
             super(itemView);
 
 
-          //  this.tvProduct = (TextView) itemView.findViewById(R.id.product);
+       /*     this.tvOrderNum = (TextView) itemView.findViewById(R.id.order_num);
+            this.tvProduct = (TextView) itemView.findViewById(R.id.product);
+            this.tvCustomer = (TextView) itemView.findViewById(R.id.order_by);
+            this.tvStatus = (TextView) itemView.findViewById(R.id.status);*/
 
 
-           linearLayout = (ConstraintLayout)itemView.findViewById(R.id.linearLayout);
+            linearLayout = (ConstraintLayout)itemView.findViewById(R.id.linearLayout);
         }
     }
 }
