@@ -56,7 +56,7 @@ public class PlaceholderFragment extends Fragment {
         final TextView textView = root.findViewById(R.id.section_label);
         textView.setText("deals");
         RecyclerView recyclerView = root.findViewById(R.id.deals);
-        DealListAdapter adapter = new DealListAdapter(getDummyData());
+        DealListAdapter adapter = new DealListAdapter(getDummyData(),getActivity());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);

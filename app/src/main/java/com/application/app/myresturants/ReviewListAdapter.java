@@ -4,29 +4,25 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.app.myresturants.dialog.ConfirmDealFragment;
+import com.application.app.myresturants.dialog.ReviewFormFragment;
 import com.application.app.myresturants.models.DealModel;
-import com.application.app.myresturants.models.OrderModel;
 
 import java.util.ArrayList;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class DealListAdapter extends RecyclerView.Adapter<DealListAdapter.ViewHolder>{
+public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolder>{
     private ArrayList<DealModel> listdata;
 private Context context;
     // RecyclerView recyclerView;
-    public DealListAdapter(ArrayList<DealModel> listdata, Context context) {
+    public ReviewListAdapter(ArrayList<DealModel> listdata, Context context) {
         this.listdata = listdata;
         this.context = context;
     }
@@ -51,10 +47,10 @@ private Context context;
             @Override
             public void onClick(View view) {
 
-                FragmentActivity activity = (FragmentActivity)(context);
+              /*  FragmentActivity activity = (FragmentActivity)(context);
                 FragmentManager fm = activity.getSupportFragmentManager();
-                ConfirmDealFragment alertDialog = new ConfirmDealFragment();
-                alertDialog.show(fm, "fragment_alert");
+                ReviewFormFragment alertDialog = new ReviewFormFragment();
+                alertDialog.show(fm, "fragment_alert");*/
 
 
 

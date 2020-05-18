@@ -8,12 +8,19 @@ import android.widget.TextView;
 
 import com.application.app.myresturants.DealListAdapter;
 import com.application.app.myresturants.R;
+import com.application.app.myresturants.ReviewListAdapter;
+import com.application.app.myresturants.dialog.ConfirmDealFragment;
+import com.application.app.myresturants.dialog.ReviewFormFragment;
 import com.application.app.myresturants.models.DealModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,10 +61,28 @@ public class ReviewFragment extends Fragment {
        // final TextView textView = root.findViewById(R.id.section_label);
 //        textView.setText("reviews");
         RecyclerView recyclerView = root.findViewById(R.id.deals);
-        DealListAdapter adapter = new DealListAdapter(getDummyData());
+        ReviewListAdapter adapter = new ReviewListAdapter(getDummyData(),getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+               // FragmentActivity activity = (FragmentActivity)(context);
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                ReviewFormFragment alertDialog = new ReviewFormFragment();
+                alertDialog.show(fm, "fragment_alert");
+                /*
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+            }
+        });
+
+
+
         return root;
     }
 
