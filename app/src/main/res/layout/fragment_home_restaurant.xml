@@ -35,7 +35,7 @@
             android:textSize="22sp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Product"
+            android:text="Date"
             android:textColor="@android:color/white"
             android:textStyle="bold"></TextView>
 
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Customer"
+            android:text="ETA"
             android:textColor="@android:color/white"
             android:textStyle="bold"></TextView>
 

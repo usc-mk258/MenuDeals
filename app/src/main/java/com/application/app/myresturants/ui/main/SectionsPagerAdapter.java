@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.application.app.myresturants.R;
+import com.application.app.myresturants.models.RestautantModel;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -19,10 +20,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
     private final Context mContext;
+    private RestautantModel restautantModel;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm, RestautantModel restautantModel) {
         super(fm);
         mContext = context;
+        this.restautantModel = restautantModel;
     }
 
     @Override
@@ -34,10 +37,10 @@ Fragment fragment = null;
 switch (position)
 {
     case 0:
-        fragment =   PlaceholderFragment.newInstance(position + 1);
+        fragment =   PlaceholderFragment.newInstance(position + 1,restautantModel);
         break;
     case 1:
-        fragment =  ReviewFragment.newInstance(position+1);
+        fragment =  ReviewFragment.newInstance(position+1,restautantModel);
            break;
 
 }
