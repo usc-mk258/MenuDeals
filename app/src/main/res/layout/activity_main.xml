@@ -54,7 +54,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:id="@+id/email"
-
+android:text="mcdonalds@restaurant.com"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
 
@@ -81,7 +81,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:id="@+id/passsword"
-
+android:text="asdasd"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
 
@@ -94,19 +94,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/round_button"
         android:paddingStart="50dp"
         android:paddingLeft="50dp"
         android:paddingEnd="50dp"
         android:paddingRight="50dp"
-        android:text="SIGNUP AS CUSTOMER"
+        android:text="CUSTOMER"
         android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <Button
         android:id="@+id/button3"
@@ -126,19 +125,26 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textField3" />
+        app:layout_constraintTop_toBottomOf="@+id/radio_group" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/round_button"
-        android:text="SIGNUP AS RESTAURANT"
+        android:paddingStart="50dp"
+        android:paddingLeft="50dp"
+        android:paddingEnd="50dp"
+        android:paddingRight="50dp"
+        android:text="RESTAURANT"
         android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="@+id/button"
-        app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <TextView
         android:id="@+id/textView4"
@@ -153,5 +159,63 @@
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:background="#ceffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textField3">
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:checked="true"
+
+            android:text="Customer"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
+
+        <RadioButton
+
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="0.13"
+            android:checked="false"
+            android:text="Retaurant"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="#ceffffff"
+        android:gravity="center"
+        android:text="SignUp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,26 +6,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.application.app.myresturants.DealListAdapter;
 import com.application.app.myresturants.R;
 import com.application.app.myresturants.ReviewListAdapter;
 import com.application.app.myresturants.api.Api;
-import com.application.app.myresturants.dialog.ConfirmDealFragment;
 import com.application.app.myresturants.dialog.ReviewFormFragment;
 import com.application.app.myresturants.helper.GsonHelper;
 import com.application.app.myresturants.helper.Prefrences;
-import com.application.app.myresturants.models.DealModel;
-import com.application.app.myresturants.models.DealResponse;
-import com.application.app.myresturants.models.DealsModel;
 import com.application.app.myresturants.models.RestaurantReviewModel;
 import com.application.app.myresturants.models.RestautantModel;
 import com.application.app.myresturants.models.ReviewModel;
 import com.application.app.myresturants.models.ReviewResponse;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +26,6 @@ import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -74,6 +66,12 @@ public class ReviewFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getAllReviews(restautantModel.getId());
+    }
+
+    @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -83,7 +81,7 @@ public class ReviewFragment extends Fragment {
         restautantModel = (RestautantModel) getArguments().getSerializable("restaurant");
         gsonHelper = new GsonHelper();
          recyclerView = root.findViewById(R.id.deals);
-        getAllReviews(restautantModel.getId());
+
         FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

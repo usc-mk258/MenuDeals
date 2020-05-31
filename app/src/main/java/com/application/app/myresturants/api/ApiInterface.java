@@ -32,6 +32,11 @@ public interface ApiInterface {
         // API's endpoints
     Call<LoginResponse> registration(@Body RequestBody map);
 
+    @POST("restaurant/signin")
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+        // API's endpoints
+    Call<LoginResponse> loginRestaurant(@Body RequestBody map);
+
 
     @POST("customer/nearby-restaurant")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
@@ -62,7 +67,7 @@ public interface ApiInterface {
         // API's endpoints
     Call<LoginResponse> saveOrderStatus(@HeaderMap Map<String, String> headers, @Path(value = "id", encoded = true) String id);
 
-    @POST("customer/restaurant-reviews/{id}")
+    @POST("customer/restaurant-review/{id}")
   //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
         // API's endpoints
     Call<LoginResponse> saveReview(@HeaderMap Map<String, String> headers, @Path(value = "id", encoded = true) String id,@Body RequestBody map);

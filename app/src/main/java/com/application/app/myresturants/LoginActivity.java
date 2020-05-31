@@ -15,6 +15,8 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.application.app.myresturants.api.Api;
@@ -39,6 +41,10 @@ Button signup_restaurant,getSignup_customer,button3;
     TextInputEditText id,pass;
     LoginResponse signUpResponsesData;
 GsonHelper gsonHelper;
+
+    RadioGroup radioGroup;
+    private RadioButton radioButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,18 +57,30 @@ gsonHelper = new GsonHelper();
 
         id = findViewById(R.id.email);
         pass = findViewById(R.id.passsword);
+        radioGroup=(RadioGroup)findViewById(R.id.radio_group);
 
 
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                int selectedId=radioGroup.getCheckedRadioButtonId();
+                radioButton=(RadioButton)findViewById(selectedId);
+              //  Toast.makeText(LoginActivity.this,radioButton.getText(),Toast.LENGTH_SHORT).show();
+
                 if(id.getText().toString().isEmpty() && pass.getText().toString().isEmpty()){
                     Toast.makeText(LoginActivity.this, "Please fill required fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
 
-                    signUp(id.getText().toString(),pass.getText().toString());
+if(radioButton.getText().toString().equalsIgnoreCase("customer")){
+
+    signUp(id.getText().toString(),pass.getText().toString());
+}
+else{
+    signUpRestaurant(id.getText().toString(),pass.getText().toString());
+}
+
                 }
             }
         });
@@ -127,6 +145,106 @@ private void signUp(String id,String password){
                     e.printStackTrace();
                 }
                 Intent i = new Intent(LoginActivity.this, CustomerActivity.class);
+                startActivity(i);
+            }
+            else {
+
+                try {
+                    Toast.makeText(getApplicationContext(), gsonHelper.GsonJsonError(response.errorBody().string()).getMessage(), Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            progressDialog.dismiss();
+
+        }
+
+        @Override
+        public void onFailure(Call<LoginResponse> call, Throwable t) {
+            Log.d("response", t.getStackTrace().toString());
+            Toast.makeText(getApplicationContext(), t.getStackTrace().toString(), Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+
+        }
+    });
+    /*(new Callback<ResponseBody>()
+    {
+        @Override
+        public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> rawResponse)
+        {
+            try
+            {
+
+
+               // Prefrences prefrences = new Prefrences();
+             //   prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN);
+                //get your response....
+               // Toast.makeText(getApplicationContext(), rawResponse.body().string(), Toast.LENGTH_SHORT).show();
+
+                Type listType = new TypeToken<LoginResponse>() {
+                }.getType();
+                LoginResponse loginResponse =  new Gson().fromJson(rawResponse.body().string(), listType);
+                progressDialog.dismiss();//   Log.d(TAG, "RetroFit2.0 :RetroGetLogin: " + rawResponse.body().string());
+            }
+            catch (Exception e)
+            { progressDialog.dismiss();//
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ResponseBody> call, Throwable throwable)
+        { progressDialog.dismiss();//
+            // other stuff...
+        }
+    });*/
+
+}
+
+
+
+private void signUpRestaurant(String id,String password){
+    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+    progressDialog.setCancelable(false); // set cancelable to false
+    progressDialog.setMessage("Please Wait"); // set message
+    progressDialog.show();
+    HashMap<String, Object> jsonParams = new HashMap<>();
+    //put something inside the map, could be null
+    jsonParams.put("email", id);
+    jsonParams.put("password", password);
+
+    RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
+
+/*
+    RequestBody body =
+            RequestBody.create(MediaType.parse("text/plain"),( new JSONObject(jsonParams)).toString());
+
+
+    String bodyString = jsonBody + "?grant_type=" +
+            grantType + "&scope=" + scope;
+    TypedInput requestBody = new TypedByteArray(
+            "application/json", bodyString.getBytes(Charset.forName("UTF-8")));*/
+
+  //  RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
+//serviceCaller is the interface initialized with retrofit.create...
+    Call<LoginResponse> response = Api.getClient().loginRestaurant( body);
+
+    response.enqueue(new Callback<LoginResponse>() {
+        @Override
+        public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            signUpResponsesData = response.body();
+            if(response.code()==200 && signUpResponsesData.isSuccess()){
+                Prefrences prefrences = new Prefrences();
+                prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN,signUpResponsesData.getData().get("token").toString());
+             Constants constants = new Constants();
+                try {
+                   CustomerToken customerToken = constants.decoded(signUpResponsesData.getData().get("token").toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Intent i = new Intent(LoginActivity.this, RestaurantActivity.class);
                 startActivity(i);
             }
             else {

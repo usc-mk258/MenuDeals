@@ -89,7 +89,7 @@ public class ReviewFormFragment extends DialogFragment
                 }
                 else {
 
-                    saveReview(model.getId(),desc.getText().toString(),ratingBar.getRating());
+                    saveReview(model.getId(),desc.getText().toString(),(int)ratingBar.getRating());
                 }
                // Toast.makeText(getActivity(), model.getDescription(), Toast.LENGTH_SHORT).show();
             }
@@ -101,7 +101,7 @@ public class ReviewFormFragment extends DialogFragment
 
 
 
-    private void saveReview(String id,String desc,float rating){
+    private void saveReview(String id,String desc,int rating){
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false); // set cancelable to false
         progressDialog.setMessage("Please Wait"); // set message
@@ -140,7 +140,9 @@ public class ReviewFormFragment extends DialogFragment
                 signUpResponsesData = response.body();
                 if(response.code()==200 && signUpResponsesData.isSuccess()){
                     Toast.makeText(getActivity(), "Thank you for your review", Toast.LENGTH_SHORT).show();
+                    getActivity().startActivityForResult(getActivity().getIntent(), 10);
                     getDialog().dismiss();
+
                     //Prefrences prefrences = new Prefrences();
                     // prefrences.putStringPreference(getActivity(), Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN,signUpResponsesData.getData().get(0)+"");
                 /*    RestaurantReviewModel dealsModel = signUpResponsesData.getData();
