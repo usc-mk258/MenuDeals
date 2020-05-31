@@ -15,6 +15,7 @@ import com.application.app.myresturants.ReviewListAdapter;
 import com.application.app.myresturants.api.Api;
 import com.application.app.myresturants.dialog.ConfirmDealFragment;
 import com.application.app.myresturants.dialog.ReviewFormFragment;
+import com.application.app.myresturants.helper.GsonHelper;
 import com.application.app.myresturants.helper.Prefrences;
 import com.application.app.myresturants.models.DealModel;
 import com.application.app.myresturants.models.DealResponse;
@@ -26,6 +27,7 @@ import com.application.app.myresturants.models.ReviewResponse;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -46,7 +48,7 @@ import retrofit2.Response;
 public class ReviewFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-
+    GsonHelper gsonHelper;
     private PageViewModel pageViewModel;
     RestautantModel restautantModel;
     RecyclerView recyclerView;
@@ -79,7 +81,7 @@ public class ReviewFragment extends Fragment {
        // final TextView textView = root.findViewById(R.id.section_label);
 //        textView.setText("reviews");
         restautantModel = (RestautantModel) getArguments().getSerializable("restaurant");
-
+        gsonHelper = new GsonHelper();
          recyclerView = root.findViewById(R.id.deals);
         getAllReviews(restautantModel.getId());
         FloatingActionButton fab = root.findViewById(R.id.fab);
@@ -159,7 +161,11 @@ public class ReviewFragment extends Fragment {
                 }
                 else {
 
-                    Toast.makeText(getActivity().getApplicationContext(), response.body().toString(), Toast.LENGTH_SHORT).show();
+                    try {
+                        Toast.makeText(getActivity(), gsonHelper.GsonJsonError(response.errorBody().string()).getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
 

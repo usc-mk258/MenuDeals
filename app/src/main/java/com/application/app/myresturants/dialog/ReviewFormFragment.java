@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.application.app.myresturants.R;
 import com.application.app.myresturants.ReviewListAdapter;
 import com.application.app.myresturants.api.Api;
+import com.application.app.myresturants.helper.GsonHelper;
 import com.application.app.myresturants.helper.Prefrences;
 import com.application.app.myresturants.models.DealsModel;
 import com.application.app.myresturants.models.LoginResponse;
@@ -25,6 +26,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -40,7 +42,7 @@ public class ReviewFormFragment extends DialogFragment
 
     public RestautantModel model;
     private LoginResponse signUpResponsesData;
-
+    GsonHelper gsonHelper;
 
     public static ReviewFormFragment newInstance(int arg, RestautantModel complexVar) {
         ReviewFormFragment frag = new ReviewFormFragment();
@@ -57,6 +59,7 @@ public class ReviewFormFragment extends DialogFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             // index = getArguments().getInt(ARG_SECTION_NUMBER);
             model = (RestautantModel) getArguments().getSerializable("deal");
@@ -69,6 +72,7 @@ public class ReviewFormFragment extends DialogFragment
 //getDialog().setTitle("Deal Info");
         // Do all the stuff to initialize your custom view
         Button submit;
+        gsonHelper = new GsonHelper();
         final RatingBar ratingBar;
         final TextInputEditText desc;
         ratingBar = v.findViewById(R.id.ratingBar);
@@ -153,7 +157,11 @@ public class ReviewFormFragment extends DialogFragment
                 }
                 else {
 
-                    Toast.makeText(getActivity().getApplicationContext(), response.body().toString(), Toast.LENGTH_SHORT).show();
+                    try {
+                        Toast.makeText(getActivity(), gsonHelper.GsonJsonError(response.errorBody().string()).getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
 

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.application.app.myresturants.api.Api;
 import com.application.app.myresturants.helper.Constants;
+import com.application.app.myresturants.helper.GsonHelper;
 import com.application.app.myresturants.helper.Prefrences;
 import com.application.app.myresturants.models.CustomerToken;
 import com.application.app.myresturants.models.LoginResponse;
@@ -28,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,13 +38,13 @@ public class LoginActivity extends AppCompatActivity {
 Button signup_restaurant,getSignup_customer,button3;
     TextInputEditText id,pass;
     LoginResponse signUpResponsesData;
-
+GsonHelper gsonHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.getSupportActionBar().hide();
-
+gsonHelper = new GsonHelper();
         signup_restaurant = findViewById(R.id.button2);
         getSignup_customer = findViewById(R.id.button);
         button3 = findViewById(R.id.button3);
@@ -115,7 +117,7 @@ private void signUp(String id,String password){
         @Override
         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
             signUpResponsesData = response.body();
-            if(signUpResponsesData.isSuccess()){
+            if(response.code()==200 && signUpResponsesData.isSuccess()){
                 Prefrences prefrences = new Prefrences();
                 prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN,signUpResponsesData.getData().get("token").toString());
              Constants constants = new Constants();
@@ -129,7 +131,11 @@ private void signUp(String id,String password){
             }
             else {
 
-                Toast.makeText(getApplicationContext(), "Cannot login please try again with correct credentials ", Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(getApplicationContext(), gsonHelper.GsonJsonError(response.errorBody().string()).getMessage(), Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
 

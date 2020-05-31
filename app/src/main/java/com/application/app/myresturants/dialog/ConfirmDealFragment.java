@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.application.app.myresturants.DealListAdapter;
 import com.application.app.myresturants.R;
 import com.application.app.myresturants.api.Api;
+import com.application.app.myresturants.helper.GsonHelper;
 import com.application.app.myresturants.helper.Prefrences;
 import com.application.app.myresturants.models.DealResponse;
 import com.application.app.myresturants.models.DealsModel;
@@ -21,6 +22,7 @@ import com.application.app.myresturants.models.LoginResponse;
 import com.application.app.myresturants.models.RestautantModel;
 import com.bumptech.glide.Glide;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -34,7 +36,7 @@ public class ConfirmDealFragment extends DialogFragment
 {
     public DealsModel model;
     private LoginResponse signUpResponsesData;
-
+    GsonHelper gsonHelper;
     public static ConfirmDealFragment newInstance(int arg, DealsModel complexVar) {
         ConfirmDealFragment frag = new ConfirmDealFragment();
         Bundle args = new Bundle();
@@ -59,7 +61,7 @@ public class ConfirmDealFragment extends DialogFragment
         View v = inflater.inflate(R.layout.layout_confirm_order_fragment, container, false);
 //getDialog().setTitle("Deal Info");
         // Do all the stuff to initialize your custom view
-
+        gsonHelper = new GsonHelper();
         Button submit = v.findViewById(R.id.submit);
         ImageView imageView = v.findViewById(R.id.imageView2);
         TextView desc = v.findViewById(R.id.desc);
@@ -111,7 +113,11 @@ submit.setOnClickListener(new View.OnClickListener() {
                 }
                 else {
 
-                    Toast.makeText(getActivity().getApplicationContext(), response.body().toString(), Toast.LENGTH_SHORT).show();
+                    try {
+                        Toast.makeText(getActivity(), gsonHelper.GsonJsonError(response.errorBody().string()).getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
 
