@@ -1,6 +1,8 @@
 package com.application.app.myresturants.models;
 
-public class OrdersModel {
+import java.io.Serializable;
+
+public class OrdersModel implements Serializable {
 
     public String getId() {
         return id;

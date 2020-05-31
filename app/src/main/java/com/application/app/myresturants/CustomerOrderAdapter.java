@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.application.app.myresturants.dialog.ConfirmDealFragment;
+import com.application.app.myresturants.dialog.OrderStatusFragmnet;
 import com.application.app.myresturants.helper.Utiles;
 import com.application.app.myresturants.models.OrderModel;
 import com.application.app.myresturants.models.OrdersModel;
@@ -14,14 +16,17 @@ import com.application.app.myresturants.models.OrdersModel;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CustomerOrderAdapter extends RecyclerView.Adapter<CustomerOrderAdapter.ViewHolder>{
     private ArrayList<OrdersModel> listdata;
-
+    FragmentActivity context;
     // RecyclerView recyclerView;
-    public CustomerOrderAdapter(ArrayList<OrdersModel> listdata) {
+    public CustomerOrderAdapter(ArrayList<OrdersModel> listdata, FragmentActivity activity) {
         this.listdata = listdata;
+        this.context = activity;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -36,7 +41,7 @@ public class CustomerOrderAdapter extends RecyclerView.Adapter<CustomerOrderAdap
         final OrdersModel myListData = listdata.get(position);
 
         String eta ="-";
-        if(myListData.getEta()!= null)
+        if(myListData.getEta()!= null && myListData.getStatus().equalsIgnoreCase("accepted"))
         {
             eta = myListData.getEta();
         }
@@ -54,6 +59,15 @@ public class CustomerOrderAdapter extends RecyclerView.Adapter<CustomerOrderAdap
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+              //  OrderStatusFragmnet.newInstance(position+1,myListData);
+                if(myListData.getStatus().equalsIgnoreCase("accepted")){
+
+                FragmentActivity activity = (FragmentActivity)(context);
+                FragmentManager fm = activity.getSupportFragmentManager();
+                OrderStatusFragmnet alertDialog = new OrderStatusFragmnet().newInstance(1,myListData);
+                alertDialog.show(fm, "fragment_alert");
+
+                }
               //  Toast.makeText(view.getContext(),"click on item: "+position ,Toast.LENGTH_LONG).show();
             }
         });

@@ -56,6 +56,12 @@ public interface ApiInterface {
         // API's endpoints
     Call<ReviewResponse> getReviewList(@HeaderMap Map<String, String> headers, @Path(value = "id", encoded = true) String id);
 
+
+    @GET("customer/order/received/{id}")
+  //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
+        // API's endpoints
+    Call<LoginResponse> saveOrderStatus(@HeaderMap Map<String, String> headers, @Path(value = "id", encoded = true) String id);
+
     @POST("customer/restaurant-reviews/{id}")
   //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
         // API's endpoints
