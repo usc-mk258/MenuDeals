@@ -7,20 +7,25 @@ import com.application.app.myresturants.models.DealResponse;
 import com.application.app.myresturants.models.LoginResponse;
 import com.application.app.myresturants.models.RestauranResponse;
 import com.application.app.myresturants.models.RestaurantListModel;
+import com.application.app.myresturants.models.RestaurantOrderResponse;
 import com.application.app.myresturants.models.ReviewResponse;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -50,10 +55,22 @@ public interface ApiInterface {
     Call<DealResponse> getDealList(@HeaderMap Map<String, String> headers, @Path(value = "id", encoded = true) String id);
 
 
+
+    @GET("restaurant/deals/{id}")
+  //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
+        // API's endpoints
+    Call<DealResponse> getRestaurantDealList(@HeaderMap Map<String, String> headers, @Path(value = "id", encoded = true) String id);
+
+
     @GET("customer/orders")
   //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
         // API's endpoints
     Call<CustomerOrderResponse> getCustomerOrder(@HeaderMap Map<String, String> headers);
+
+    @GET("restaurant/orders")
+  //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
+        // API's endpoints
+    Call<RestaurantOrderResponse> getRestaurantOrder(@HeaderMap Map<String, String> headers);
 
 
     @GET("customer/restaurant-reviews/{id}")
@@ -62,10 +79,24 @@ public interface ApiInterface {
     Call<ReviewResponse> getReviewList(@HeaderMap Map<String, String> headers, @Path(value = "id", encoded = true) String id);
 
 
+
+    @GET("restaurant/reviews")
+  //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
+        // API's endpoints
+    Call<ReviewResponse> getRestaurantReviewList(@HeaderMap Map<String, String> headers);
+
+
     @GET("customer/order/received/{id}")
   //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
         // API's endpoints
     Call<LoginResponse> saveOrderStatus(@HeaderMap Map<String, String> headers, @Path(value = "id", encoded = true) String id);
+
+
+
+    @GET("restaurant/order/mark/{id}/{status}")
+  //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
+        // API's endpoints
+    Call<LoginResponse> saveOrderStatusRes(@HeaderMap Map<String, String> headers, @Path(value = "id", encoded = true) String id,@Path(value = "status", encoded = true) boolean status,@Query("eta") String eta);
 
     @POST("customer/restaurant-review/{id}")
   //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
@@ -78,5 +109,13 @@ public interface ApiInterface {
         // API's endpoints
     Call<LoginResponse> subDeal(@HeaderMap Map<String, String> headers, @Path(value = "id", encoded = true) String id);
 
-    // In registration method @Field used to set the keys and String data type is representing its a string type value and callback is used to get the response from api and it will set it in our POJO class
+
+ @Multipart
+ @POST("retrofit_example/upload_image.php")
+ Call<LoginResponse> uploadFile(@HeaderMap Map<String, String> headers,@Part MultipartBody.Part file);
+
+
+ @Multipart
+ @POST("file-upload")
+ Call<LoginResponse> uploadPhoto(@Header("Access-Token") String header, @Part MultipartBody.Part imageFile);
 }

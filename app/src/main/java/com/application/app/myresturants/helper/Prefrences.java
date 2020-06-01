@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.application.app.myresturants.LoginActivity;
+import com.application.app.myresturants.models.CustomerToken;
 
 public class Prefrences {
 
@@ -24,8 +25,13 @@ public class Prefrences {
         editor.putString(key, value);
         editor.apply();
     }
-public String getStringPreference(Context context){
+public String getTokenPreference(Context context){
     return getStringPreference(context,Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN);
+
+}
+
+public CustomerToken getTokenCustomer(Context context){
+    return GsonHelper.GsonToCustomerToekn(getStringPreference(context,Constants.FILENAME,Constants.DECODE_USER_TOKEN)) ;
 
 }
     protected String getStringPreference(Context context, String prefsName,

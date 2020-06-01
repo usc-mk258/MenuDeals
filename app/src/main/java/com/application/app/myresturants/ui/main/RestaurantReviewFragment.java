@@ -6,11 +6,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.application.app.myresturants.R;
+import com.application.app.myresturants.ReviewListAdapter;
+import com.application.app.myresturants.api.Api;
+import com.application.app.myresturants.dialog.ReviewFormFragment;
+import com.application.app.myresturants.helper.GsonHelper;
+import com.application.app.myresturants.helper.Prefrences;
+import com.application.app.myresturants.models.RestaurantReviewModel;
+import com.application.app.myresturants.models.RestautantModel;
+import com.application.app.myresturants.models.ReviewModel;
+import com.application.app.myresturants.models.ReviewResponse;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,34 +34,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import com.application.app.myresturants.DealListAdapter;
-import com.application.app.myresturants.R;
-import com.application.app.myresturants.api.Api;
-import com.application.app.myresturants.helper.Prefrences;
-import com.application.app.myresturants.models.DealModel;
-import com.application.app.myresturants.models.DealResponse;
-import com.application.app.myresturants.models.DealsModel;
-import com.application.app.myresturants.models.RestautantModel;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends Fragment {
+public class RestaurantReviewFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-
+    GsonHelper gsonHelper;
     private PageViewModel pageViewModel;
-RestautantModel restautantModel;
-    private DealResponse signUpResponsesData;
+
     RecyclerView recyclerView;
-    public static PlaceholderFragment newInstance(int index, RestautantModel restautantModel) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
+    String restaurantId;
+    private ReviewResponse signUpResponsesData;
+    public static RestaurantReviewFragment newInstance(int index, String id) {
+        RestaurantReviewFragment fragment = new RestaurantReviewFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
-        bundle.putSerializable("restaurant", restautantModel);
+        bundle.putString("restaurant", id);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -57,43 +62,52 @@ RestautantModel restautantModel;
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
-            restautantModel = (RestautantModel) getArguments().getSerializable("restaurant");
+            restaurantId =  getArguments().getString("restaurant");
         }
         pageViewModel.setIndex(index);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAllReviews(restaurantId);
     }
 
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_deal_list, container, false);
-        final TextView textView = root.findViewById(R.id.section_label);
-        textView.setText("deals");
+        View root = inflater.inflate(R.layout.fragment_review, container, false);
+       // final TextView textView = root.findViewById(R.id.section_label);
+//        textView.setText("reviews");
+       // restautantModel = (RestautantModel) getArguments().getSerializable("restaurant");
+        gsonHelper = new GsonHelper();
          recyclerView = root.findViewById(R.id.deals);
 
-        getAllDeals(restautantModel.getId());
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+      fab.setVisibility(View.GONE);
 
 
 
-        /*pageViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
         return root;
     }
 
 
 
-    private void getAllDeals(String id){
+
+
+
+
+
+
+    private void getAllReviews(String id){
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false); // set cancelable to false
         progressDialog.setMessage("Please Wait"); // set message
         progressDialog.show();
 
 
-      //  RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
+        //  RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
 
 /*
     RequestBody body =
@@ -111,33 +125,34 @@ RestautantModel restautantModel;
         HashMap<String,String> stringStringHashMap = new HashMap<>();
         stringStringHashMap.put("Content-Type","application/json;charset=UTF-8");
         stringStringHashMap.put("authorization","bearer "+prefrences.getTokenPreference(getContext()));
-        Call<DealResponse> response = Api.getClient().getDealList(stringStringHashMap,id );
+        Call<ReviewResponse> response = Api.getClient().getRestaurantReviewList(stringStringHashMap);
 
-        response.enqueue(new Callback<DealResponse>() {
+        response.enqueue(new Callback<ReviewResponse>() {
             @Override
-            public void onResponse(Call<DealResponse> call, Response<DealResponse> response) {
+            public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
                 signUpResponsesData = response.body();
                 if(response.code()==200 && signUpResponsesData.isSuccess()){
                     //Prefrences prefrences = new Prefrences();
                     // prefrences.putStringPreference(getActivity(), Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN,signUpResponsesData.getData().get(0)+"");
-                    ArrayList<DealsModel> dealsModel = signUpResponsesData.getData();
+                RestaurantReviewModel dealsModel = signUpResponsesData.getData();
+                    ArrayList<ReviewModel>  reviews = dealsModel.getReviews();
 
-                    DealListAdapter adapter = new DealListAdapter(dealsModel,getActivity());
+
+
+                    ReviewListAdapter adapter = new ReviewListAdapter(reviews,getContext());
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     recyclerView.setAdapter(adapter);
-                   /* int numberOfColumns = 2;
-                    restaurants.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));
-                    dataAdapter  = new RestaurantAdapter( restautantModels,getActivity());
-                    restaurants.setAdapter(dataAdapter);*/
 
-
-                //    Toast.makeText(getActivity().getApplicationContext(), "Cannot login please try again with correct credentials ", Toast.LENGTH_SHORT).show();
 
                 }
                 else {
 
-                    Toast.makeText(getActivity().getApplicationContext(), "Cannot login please try again with correct credentials ", Toast.LENGTH_SHORT).show();
+                    try {
+                        Toast.makeText(getActivity(), gsonHelper.GsonJsonError(response.errorBody().string()).getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
 
@@ -146,7 +161,7 @@ RestautantModel restautantModel;
             }
 
             @Override
-            public void onFailure(Call<DealResponse> call, Throwable t) {
+            public void onFailure(Call<ReviewResponse> call, Throwable t) {
                 Log.d("response", t.getStackTrace().toString());
                 Toast.makeText(getActivity().getApplicationContext(), t.getStackTrace().toString(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
@@ -188,32 +203,5 @@ RestautantModel restautantModel;
     }
 
 
-
-    private ArrayList<DealModel> getDummyData(){
-        ArrayList<DealModel> ordersList = new ArrayList<>();
-        DealModel orderModel1 =new DealModel();
-
-        orderModel1.setDealName("1");
-
-        ordersList.add(orderModel1);
-
-
-        DealModel orderModel2 =new DealModel();
-
-        orderModel2.setDealName("2");
-        ordersList.add(orderModel2);
-
-
-        DealModel orderModel3 =new DealModel();
-
-        orderModel3.setDealName("3");
-        ordersList.add(orderModel3);
-
-
-
-
-        return ordersList;
-
-    }
 
 }

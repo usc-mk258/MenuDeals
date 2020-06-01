@@ -7,31 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.application.app.myresturants.R;
-import com.application.app.myresturants.ReviewListAdapter;
 import com.application.app.myresturants.api.Api;
 import com.application.app.myresturants.helper.GsonHelper;
 import com.application.app.myresturants.helper.Prefrences;
 import com.application.app.myresturants.models.LoginResponse;
 import com.application.app.myresturants.models.OrdersModel;
-import com.application.app.myresturants.models.RestaurantReviewModel;
-import com.application.app.myresturants.models.RestautantModel;
-import com.application.app.myresturants.models.ReviewModel;
-import com.application.app.myresturants.models.ReviewResponse;
-import com.google.android.material.textfield.TextInputEditText;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -111,7 +99,7 @@ public class OrderStatusFragmnet extends DialogFragment
         Prefrences prefrences= new Prefrences();
         HashMap<String,String> stringStringHashMap = new HashMap<>();
         stringStringHashMap.put("Content-Type","application/json;charset=UTF-8");
-        stringStringHashMap.put("authorization","bearer "+prefrences.getStringPreference(getContext()));
+        stringStringHashMap.put("authorization","bearer "+prefrences.getTokenPreference(getContext()));
         Call<LoginResponse> response = Api.getClient().saveOrderStatus(stringStringHashMap,id );
 
         response.enqueue(new Callback<LoginResponse>() {

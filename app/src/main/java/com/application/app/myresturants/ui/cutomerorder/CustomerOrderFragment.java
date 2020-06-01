@@ -6,14 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
@@ -21,17 +17,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.application.app.myresturants.CustomerOrderAdapter;
-import com.application.app.myresturants.OrderAdapter;
 import com.application.app.myresturants.R;
-import com.application.app.myresturants.ReviewListAdapter;
 import com.application.app.myresturants.api.Api;
 import com.application.app.myresturants.helper.Prefrences;
 import com.application.app.myresturants.models.CustomerOrderResponse;
-import com.application.app.myresturants.models.OrderModel;
 import com.application.app.myresturants.models.OrdersModel;
-import com.application.app.myresturants.models.RestaurantReviewModel;
-import com.application.app.myresturants.models.ReviewModel;
-import com.application.app.myresturants.models.ReviewResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,7 +69,7 @@ public class CustomerOrderFragment extends Fragment {
         Prefrences prefrences= new Prefrences();
         HashMap<String,String> stringStringHashMap = new HashMap<>();
         stringStringHashMap.put("Content-Type","application/json;charset=UTF-8");
-        stringStringHashMap.put("authorization","bearer "+prefrences.getStringPreference(getContext()));
+        stringStringHashMap.put("authorization","bearer "+prefrences.getTokenPreference(getContext()));
         Call<CustomerOrderResponse> response = Api.getClient().getCustomerOrder(stringStringHashMap);
 
         response.enqueue(new Callback<CustomerOrderResponse>() {
@@ -162,47 +152,5 @@ public class CustomerOrderFragment extends Fragment {
 
     }
 
-    private ArrayList<OrderModel> getDummyData(){
-        ArrayList<OrderModel> ordersList = new ArrayList<>();
-        OrderModel orderModel1 =new OrderModel();
 
-        orderModel1.setSrNumber("1");
-        orderModel1.setOrderNumber("101");
-        orderModel1.setProduct("Frozen yoghurt");
-        orderModel1.setOrderedBy("John");
-        orderModel1.setDate("03-04-2020");
-        orderModel1.setStatus("New");
-
-        ordersList.add(orderModel1);
-
-
-        OrderModel orderModel2 =new OrderModel();
-
-        orderModel2.setSrNumber("2");
-        orderModel2.setOrderNumber("102");
-        orderModel2.setProduct("Ice cream sandwich");
-        orderModel2.setOrderedBy("Berlin");
-        orderModel2.setDate("03-04-2020");
-        orderModel2.setStatus("Pendig");
-
-        ordersList.add(orderModel2);
-
-
-        OrderModel orderModel3 =new OrderModel();
-
-        orderModel3.setSrNumber("3");
-        orderModel3.setOrderNumber("103");
-        orderModel3.setProduct("Cupcake");
-        orderModel3.setOrderedBy("Professor");
-        orderModel3.setDate("03-04-2020");
-        orderModel3.setStatus("Rejected");
-
-        ordersList.add(orderModel3);
-
-
-
-
-        return ordersList;
-
-    }
 }

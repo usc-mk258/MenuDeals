@@ -135,7 +135,7 @@ public class ReviewFragment extends Fragment {
         Prefrences prefrences= new Prefrences();
         HashMap<String,String> stringStringHashMap = new HashMap<>();
         stringStringHashMap.put("Content-Type","application/json;charset=UTF-8");
-        stringStringHashMap.put("authorization","bearer "+prefrences.getStringPreference(getContext()));
+        stringStringHashMap.put("authorization","bearer "+prefrences.getTokenPreference(getContext()));
         Call<ReviewResponse> response = Api.getClient().getReviewList(stringStringHashMap,id );
 
         response.enqueue(new Callback<ReviewResponse>() {

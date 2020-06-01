@@ -1,6 +1,7 @@
 package com.application.app.myresturants.ui.main;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.application.app.myresturants.AddDeals;
+import com.application.app.myresturants.R;
+import com.application.app.myresturants.RestaurantDealListAdapter;
+import com.application.app.myresturants.api.Api;
+import com.application.app.myresturants.helper.Prefrences;
+import com.application.app.myresturants.models.DealModel;
+import com.application.app.myresturants.models.DealResponse;
+import com.application.app.myresturants.models.DealsModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,34 +33,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import com.application.app.myresturants.DealListAdapter;
-import com.application.app.myresturants.R;
-import com.application.app.myresturants.api.Api;
-import com.application.app.myresturants.helper.Prefrences;
-import com.application.app.myresturants.models.DealModel;
-import com.application.app.myresturants.models.DealResponse;
-import com.application.app.myresturants.models.DealsModel;
-import com.application.app.myresturants.models.RestautantModel;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends Fragment {
+public class RestaurantDealFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
-RestautantModel restautantModel;
+String restaurantId;
     private DealResponse signUpResponsesData;
     RecyclerView recyclerView;
-    public static PlaceholderFragment newInstance(int index, RestautantModel restautantModel) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
+    public static RestaurantDealFragment newInstance(int index, String id) {
+        RestaurantDealFragment fragment = new RestaurantDealFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
-        bundle.putSerializable("restaurant", restautantModel);
+        bundle.putString("restaurant", id);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -57,7 +60,7 @@ RestautantModel restautantModel;
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
-            restautantModel = (RestautantModel) getArguments().getSerializable("restaurant");
+            restaurantId =  getArguments().getString("restaurant");
         }
         pageViewModel.setIndex(index);
     }
@@ -66,21 +69,25 @@ RestautantModel restautantModel;
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_deal_list, container, false);
+        View root = inflater.inflate(R.layout.fragment_restaurant_deal_list, container, false);
         final TextView textView = root.findViewById(R.id.section_label);
         textView.setText("deals");
          recyclerView = root.findViewById(R.id.deals);
 
-        getAllDeals(restautantModel.getId());
+        getAllDeals(restaurantId);
+        FloatingActionButton fab = root.findViewById(R.id.fab);
 
 
-
-        /*pageViewModel.getText().observe(this, new Observer<String>() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), AddDeals.class);
+                startActivity(i);
+              /*  Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
             }
-        });*/
+        });
+
         return root;
     }
 
@@ -111,7 +118,7 @@ RestautantModel restautantModel;
         HashMap<String,String> stringStringHashMap = new HashMap<>();
         stringStringHashMap.put("Content-Type","application/json;charset=UTF-8");
         stringStringHashMap.put("authorization","bearer "+prefrences.getTokenPreference(getContext()));
-        Call<DealResponse> response = Api.getClient().getDealList(stringStringHashMap,id );
+        Call<DealResponse> response = Api.getClient().getRestaurantDealList(stringStringHashMap,id );
 
         response.enqueue(new Callback<DealResponse>() {
             @Override
@@ -122,7 +129,7 @@ RestautantModel restautantModel;
                     // prefrences.putStringPreference(getActivity(), Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN,signUpResponsesData.getData().get(0)+"");
                     ArrayList<DealsModel> dealsModel = signUpResponsesData.getData();
 
-                    DealListAdapter adapter = new DealListAdapter(dealsModel,getActivity());
+                    RestaurantDealListAdapter adapter = new RestaurantDealListAdapter(dealsModel,getActivity());
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     recyclerView.setAdapter(adapter);

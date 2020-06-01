@@ -61,31 +61,4 @@ public class DealList extends AppCompatActivity {
 
 
 
-    private ArrayList<DealModel> getDummyData(){
-        ArrayList<DealModel> ordersList = new ArrayList<>();
-        DealModel orderModel1 =new DealModel();
-
-        orderModel1.setDealName("1");
-
-        ordersList.add(orderModel1);
-
-
-        DealModel orderModel2 =new DealModel();
-
-        orderModel2.setDealName("2");
-        ordersList.add(orderModel2);
-
-
-        DealModel orderModel3 =new DealModel();
-
-        orderModel3.setDealName("3");
-        ordersList.add(orderModel3);
-
-
-
-
-        return ordersList;
-
-    }
-
 }

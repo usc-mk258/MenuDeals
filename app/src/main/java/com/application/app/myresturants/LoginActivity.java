@@ -140,7 +140,7 @@ private void signUp(String id,String password){
                 prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN,signUpResponsesData.getData().get("token").toString());
              Constants constants = new Constants();
                 try {
-                   CustomerToken customerToken = constants.decoded(signUpResponsesData.getData().get("token").toString());
+                   String customerToken = constants.decoded(signUpResponsesData.getData().get("token").toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -169,37 +169,7 @@ private void signUp(String id,String password){
 
         }
     });
-    /*(new Callback<ResponseBody>()
-    {
-        @Override
-        public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> rawResponse)
-        {
-            try
-            {
 
-
-               // Prefrences prefrences = new Prefrences();
-             //   prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN);
-                //get your response....
-               // Toast.makeText(getApplicationContext(), rawResponse.body().string(), Toast.LENGTH_SHORT).show();
-
-                Type listType = new TypeToken<LoginResponse>() {
-                }.getType();
-                LoginResponse loginResponse =  new Gson().fromJson(rawResponse.body().string(), listType);
-                progressDialog.dismiss();//   Log.d(TAG, "RetroFit2.0 :RetroGetLogin: " + rawResponse.body().string());
-            }
-            catch (Exception e)
-            { progressDialog.dismiss();//
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public void onFailure(Call<ResponseBody> call, Throwable throwable)
-        { progressDialog.dismiss();//
-            // other stuff...
-        }
-    });*/
 
 }
 
@@ -217,18 +187,7 @@ private void signUpRestaurant(String id,String password){
 
     RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
 
-/*
-    RequestBody body =
-            RequestBody.create(MediaType.parse("text/plain"),( new JSONObject(jsonParams)).toString());
 
-
-    String bodyString = jsonBody + "?grant_type=" +
-            grantType + "&scope=" + scope;
-    TypedInput requestBody = new TypedByteArray(
-            "application/json", bodyString.getBytes(Charset.forName("UTF-8")));*/
-
-  //  RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
-//serviceCaller is the interface initialized with retrofit.create...
     Call<LoginResponse> response = Api.getClient().loginRestaurant( body);
 
     response.enqueue(new Callback<LoginResponse>() {
@@ -240,7 +199,11 @@ private void signUpRestaurant(String id,String password){
                 prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN,signUpResponsesData.getData().get("token").toString());
              Constants constants = new Constants();
                 try {
-                   CustomerToken customerToken = constants.decoded(signUpResponsesData.getData().get("token").toString());
+                   String customerToken = constants.decoded(signUpResponsesData.getData().get("token").toString());
+
+                    prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.DECODE_USER_TOKEN,customerToken);
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

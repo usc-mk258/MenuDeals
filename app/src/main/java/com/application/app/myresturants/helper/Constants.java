@@ -10,15 +10,17 @@ import java.io.UnsupportedEncodingException;
 public class Constants {
     public static final String FILENAME = "menu_preferences";
     public static final String AUTHENTICATE_USER_TOKEN = "user_token";
+    public static final String DECODE_USER_TOKEN = "token";
 
 
-    public static CustomerToken decoded(String JWTEncoded) throws Exception {
+    public static String decoded(String JWTEncoded) throws Exception {
         try {
             String[] split = JWTEncoded.split("\\.");
             Log.d("JWT_DECODED", "Header: " + getJson(split[0]));
             Log.d("JWT_DECODED", "Body: " + getJson(split[1]));
             GsonHelper gsonHelper = new GsonHelper();
-            return gsonHelper.GsonToCustomerToekn(getJson(split[1]));
+            return (getJson(split[1]));
+         //   return gsonHelper.GsonToCustomerToekn(getJson(split[1]));
 
         } catch (UnsupportedEncodingException e) {
             //Error
