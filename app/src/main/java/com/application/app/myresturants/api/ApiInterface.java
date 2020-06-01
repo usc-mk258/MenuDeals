@@ -98,10 +98,17 @@ public interface ApiInterface {
         // API's endpoints
     Call<LoginResponse> saveOrderStatusRes(@HeaderMap Map<String, String> headers, @Path(value = "id", encoded = true) String id,@Path(value = "status", encoded = true) boolean status,@Query("eta") String eta);
 
-    @POST("customer/restaurant-review/{id}")
+    @POST("customer/restaurant-review /{id}")
   //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
         // API's endpoints
     Call<LoginResponse> saveReview(@HeaderMap Map<String, String> headers, @Path(value = "id", encoded = true) String id,@Body RequestBody map);
+
+
+
+    @POST("restaurant/deal")
+  //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
+        // API's endpoints
+    Call<LoginResponse> saveDeal(@HeaderMap Map<String, String> headers,@Body RequestBody map);
 
 
     @POST("customer/place-order/{id}")
@@ -111,7 +118,7 @@ public interface ApiInterface {
 
 
  @Multipart
- @POST("retrofit_example/upload_image.php")
+ @POST("file-upload")
  Call<LoginResponse> uploadFile(@HeaderMap Map<String, String> headers,@Part MultipartBody.Part file);
 
 
