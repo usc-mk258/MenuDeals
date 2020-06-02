@@ -21,7 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 public class RestaurantActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-
+    Boolean introAdded;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +29,8 @@ public class RestaurantActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+
+        introAdded = getIntent().getExtras().getBoolean("introAdded");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +49,12 @@ public class RestaurantActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        Bundle bundle = new Bundle();
+
+
+
+        bundle.putBoolean("introAdded",introAdded);
+        navController.setGraph(R.navigation.restaurant_navigation, bundle);
     }
 
     @Override

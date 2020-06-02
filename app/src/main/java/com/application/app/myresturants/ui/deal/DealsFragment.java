@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -41,11 +43,17 @@ private DealAdapter dataAdapter;
     ViewPager viewPager;
     TabLayout tabs;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_deal, container, false);
-       // final TextView textView = root.findViewById(R.id.text_gallery);
+
+
+
+
+
+
 
         RestautantModel restaurant = new RestautantModel();
        // restaurant.setAddress("asdads");
@@ -82,6 +90,16 @@ private DealAdapter dataAdapter;
         return root;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+      /*  Boolean introAdded = getArguments().getBoolean("introAdded");
+        if(introAdded){
+
+            Navigation.findNavController(getActivity(),R.id.nav_host_fragment).navigate(R.id.deal_to_profile,getArguments());
+
+        }*/
+    }
 
     @Override
     public void onResume() {

@@ -33,13 +33,24 @@
         android:id="@+id/nav_gallery"
         android:name="com.application.app.myresturants.ui.deal.DealsFragment"
         android:label="@string/menu_deal"
-        tools:layout="@layout/fragment_deal" />
+        tools:layout="@layout/fragment_deal" >
+
+        <action
+            android:id="@+id/deal_to_profile"
+            app:destination="@id/nav_profile" />
+
+
+    </fragment>
 
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.application.app.myresturants.ui.deal.RestaurantProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <argument
+            android:name="introAdded"
+            app:argType="boolean" />
+    </fragment>
 
 
 </navigation>

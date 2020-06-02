@@ -200,15 +200,16 @@ private void signUpRestaurant(String id,String password){
              Constants constants = new Constants();
                 try {
                    String customerToken = constants.decoded(signUpResponsesData.getData().get("token").toString());
-
+Boolean introAdded = (Boolean) signUpResponsesData.getData().get("introAdded");
                     prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.DECODE_USER_TOKEN,customerToken);
 
-
+                    Intent i = new Intent(LoginActivity.this, RestaurantActivity.class);
+                    i.putExtra("introAdded",introAdded);
+                    startActivity(i);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Intent i = new Intent(LoginActivity.this, RestaurantActivity.class);
-                startActivity(i);
+
             }
             else {
 

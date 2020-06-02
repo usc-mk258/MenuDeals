@@ -49,6 +49,19 @@ public interface ApiInterface {
     Call<RestauranResponse> getRestaurantList(@Body RequestBody map);
 
 
+
+    @POST("customer/signup")
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+        // API's endpoints
+    Call<LoginResponse> signUpCustomer(@Body RequestBody map);
+
+
+    @POST("customer/restaurant")
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+        // API's endpoints
+    Call<LoginResponse> signUpRestaurant(@Body RequestBody map);
+
+
     @GET("customer/restaurant-deals/{id}")
   //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
         // API's endpoints

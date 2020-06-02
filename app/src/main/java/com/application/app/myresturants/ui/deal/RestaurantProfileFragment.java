@@ -93,7 +93,7 @@ public class RestaurantProfileFragment extends Fragment implements OnMapReadyCal
     private static final int CAMERA_REQUEST = 1888;
     ImageButton imageBtn;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
-
+String userLat="",userLng="";
     String imageURL="";
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -113,8 +113,10 @@ Button submit;
        submit = root.findViewById(R.id.submit);
 
         descText = root.findViewById(R.id.desc_text);
+       Bundle bundle = getArguments();
 
 
+       if(!getArguments().getBoolean("introAdded"))
         getProfile();
 
 
@@ -381,7 +383,10 @@ Button submit;
                    // newDeal.setImage_url(imageUrl);
                     descText.setText(description);
                     Glide.with(getActivity()).load(images.get(0)).centerCrop().into(imageBtn);
-                    addMarker(arrayList.get(1).toString(),arrayList.get(0).toString());
+
+                    userLat=arrayList.get(1).toString();
+                    userLng=arrayList.get(0).toString();
+                   // addMarker(arrayList.get(1).toString(),arrayList.get(0).toString());
                      // Toast.makeText(getActivity().getApplicationContext(), "Profile Added", Toast.LENGTH_SHORT).show();
                    // getActivity().onBackPressed();
                 }
@@ -514,15 +519,24 @@ public void addMarker(String lat,String lng){
             }
         }
        // markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
 
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
-        // Zoom in, animating the camera.
-        mMap.animateCamera(CameraUpdateFactory.zoomIn());
-        // Zoom out to zoom level 10, animating with a duration of 2 seconds.
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
+       if(userLat.equals("") && userLng.equals(""))
+       {
+           mCurrLocationMarker = mMap.addMarker(markerOptions);
+
+
+           mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+           // Zoom in, animating the camera.
+           mMap.animateCamera(CameraUpdateFactory.zoomIn());
+           // Zoom out to zoom level 10, animating with a duration of 2 seconds.
+           mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+
+
+       }
+else
+        addMarker(userLat,userLng);
 
       /*  mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(18));*/
