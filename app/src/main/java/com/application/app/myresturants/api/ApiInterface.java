@@ -93,6 +93,14 @@ public interface ApiInterface {
 
 
 
+
+    @GET("restaurant/info")
+  //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
+        // API's endpoints
+    Call<LoginResponse> getProfile(@HeaderMap Map<String, String> headers);
+
+
+
     @GET("restaurant/order/mark/{id}/{status}")
   //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
         // API's endpoints
@@ -109,6 +117,12 @@ public interface ApiInterface {
   //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
         // API's endpoints
     Call<LoginResponse> saveDeal(@HeaderMap Map<String, String> headers,@Body RequestBody map);
+
+
+    @POST("restaurant/add-info")
+  //  @Headers({ "Content-Type: application/json;charset=UTF-8"})
+        // API's endpoints
+    Call<LoginResponse> saveInfo(@HeaderMap Map<String, String> headers,@Body RequestBody map);
 
 
     @POST("customer/place-order/{id}")

@@ -37,7 +37,9 @@ private RecyclerView deals;
 private DealAdapter dataAdapter;
 
     TextView title,desc;
-
+    RestaurantPagerAdapter sectionsPagerAdapter;
+    ViewPager viewPager;
+    TabLayout tabs;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,11 +57,12 @@ private DealAdapter dataAdapter;
         CustomerToken customerToken=  prefrences.getTokenCustomer(getActivity());
 
 
-        RestaurantPagerAdapter sectionsPagerAdapter = new RestaurantPagerAdapter(getContext(), getChildFragmentManager(),customerToken.getId());
-        ViewPager viewPager = root.findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = root.findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
+         sectionsPagerAdapter = new RestaurantPagerAdapter(getContext(), getChildFragmentManager(),customerToken.getId());
+         viewPager = root.findViewById(R.id.view_pager);
+        tabs = root.findViewById(R.id.tabs);
+
+
+
         FloatingActionButton fab = root.findViewById(R.id.fab);
 
 
@@ -77,5 +80,13 @@ private DealAdapter dataAdapter;
 
 
         return root;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewPager.setAdapter(sectionsPagerAdapter);
+        tabs.setupWithViewPager(viewPager);
     }
 }

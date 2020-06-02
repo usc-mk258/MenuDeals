@@ -61,12 +61,13 @@ Button submit;
         setContentView(R.layout.activity_add_deals);
         gsonHelper = new GsonHelper();
         imageBtn = findViewById(R.id.imageButton);
+        priceText = findViewById(R.id.price_text);
+        descText = findViewById(R.id.desc_text);
+
         imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 newDeal = new DealsModel();
-                priceText = findViewById(R.id.price_text);
-                descText = findViewById(R.id.desc_text);
 
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
