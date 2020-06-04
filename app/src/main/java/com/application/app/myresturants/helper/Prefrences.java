@@ -12,9 +12,6 @@ public class Prefrences {
 
 
 
-
-
-
     public void putStringPreference(Context context, String prefsName,
                                     String key, String value) {
 
@@ -25,6 +22,10 @@ public class Prefrences {
         editor.putString(key, value);
         editor.apply();
     }
+
+
+
+
 public String getTokenPreference(Context context){
     return getStringPreference(context,Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN);
 

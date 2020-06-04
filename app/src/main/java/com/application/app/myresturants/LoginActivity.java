@@ -25,7 +25,10 @@ import com.application.app.myresturants.helper.GsonHelper;
 import com.application.app.myresturants.helper.Prefrences;
 import com.application.app.myresturants.models.CustomerToken;
 import com.application.app.myresturants.models.LoginResponse;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -44,13 +47,34 @@ GsonHelper gsonHelper;
 
     RadioGroup radioGroup;
     private RadioButton radioButton;
-
+    String fireBaseToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.getSupportActionBar().hide();
-gsonHelper = new GsonHelper();
+
+
+
+
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setCancelable(false); // set cancelable to false
+        progressDialog.setMessage("Please Wait"); // set message
+        progressDialog.show();
+
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( LoginActivity.this,
+                new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                fireBaseToken  = instanceIdResult.getToken();
+                Log.e("newToken",fireBaseToken);
+                progressDialog.dismiss();
+
+            }
+        });
+
+        gsonHelper = new GsonHelper();
         signup_restaurant = findViewById(R.id.button2);
         getSignup_customer = findViewById(R.id.button);
         button3 = findViewById(R.id.button3);
@@ -58,6 +82,11 @@ gsonHelper = new GsonHelper();
         id = findViewById(R.id.email);
         pass = findViewById(R.id.passsword);
         radioGroup=(RadioGroup)findViewById(R.id.radio_group);
+
+
+
+
+
 
 
         button3.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +104,7 @@ gsonHelper = new GsonHelper();
 
 if(radioButton.getText().toString().equalsIgnoreCase("customer")){
 
-    signUp(id.getText().toString(),pass.getText().toString());
+    signin(id.getText().toString(),pass.getText().toString(),fireBaseToken);
 }
 else{
     signUpRestaurant(id.getText().toString(),pass.getText().toString());
@@ -105,7 +134,7 @@ else{
 
 
 
-private void signUp(String id,String password){
+private void signin(String id, String password, final String fireBaseToken){
     final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
     progressDialog.setCancelable(false); // set cancelable to false
     progressDialog.setMessage("Please Wait"); // set message
@@ -114,22 +143,11 @@ private void signUp(String id,String password){
     //put something inside the map, could be null
     jsonParams.put("email", id);
     jsonParams.put("password", password);
+    jsonParams.put("mobile_token", fireBaseToken);
 
     RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
 
-/*
-    RequestBody body =
-            RequestBody.create(MediaType.parse("text/plain"),( new JSONObject(jsonParams)).toString());
-
-
-    String bodyString = jsonBody + "?grant_type=" +
-            grantType + "&scope=" + scope;
-    TypedInput requestBody = new TypedByteArray(
-            "application/json", bodyString.getBytes(Charset.forName("UTF-8")));*/
-
-  //  RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
-//serviceCaller is the interface initialized with retrofit.create...
-    Call<LoginResponse> response = Api.getClient().registration( body);
+    Call<LoginResponse> response = Api.getClient().signin( body);
 
     response.enqueue(new Callback<LoginResponse>() {
         @Override

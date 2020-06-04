@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1016138915186",
+    "firebase_url": "https://menu-deals-92117.firebaseio.com",
+    "project_id": "menu-deals-92117",
+    "storage_bucket": "menu-deals-92117.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016138915186:android:fa0bc0c44c434ff03d91eb",
+        "android_client_info": {
+          "package_name": "com.application.app.myresturants"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016138915186-fs7op208vsmoo8o1fadi3oravk54bhf0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEp1sbipvPqVHCNFHYplZxcuMajDEmYng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016138915186-fs7op208vsmoo8o1fadi3oravk54bhf0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

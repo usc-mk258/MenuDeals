@@ -9,6 +9,8 @@ import java.io.UnsupportedEncodingException;
 
 public class Constants {
     public static final String FILENAME = "menu_preferences";
+    public static final String USER_ID = "USER_ID";
+    public static final String USER_PASSWORD = "USER_PASSWORD";
     public static final String AUTHENTICATE_USER_TOKEN = "user_token";
     public static final String DECODE_USER_TOKEN = "token";
 

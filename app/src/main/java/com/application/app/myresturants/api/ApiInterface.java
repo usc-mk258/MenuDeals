@@ -35,7 +35,7 @@ public interface ApiInterface {
     @POST("customer/signin")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
         // API's endpoints
-    Call<LoginResponse> registration(@Body RequestBody map);
+    Call<LoginResponse> signin(@Body RequestBody map);
 
     @POST("restaurant/signin")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
