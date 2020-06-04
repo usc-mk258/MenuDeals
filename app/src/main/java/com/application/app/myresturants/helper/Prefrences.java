@@ -31,6 +31,16 @@ public String getTokenPreference(Context context){
 
 }
 
+public String getUserIdPreference(Context context){
+    return getStringPreference(context,Constants.USER_ID,Constants.AUTHENTICATE_USER_TOKEN);
+
+}
+
+public String getUserPassPreference(Context context){
+    return getStringPreference(context,Constants.USER_PASSWORD,Constants.AUTHENTICATE_USER_TOKEN);
+
+}
+
 public CustomerToken getTokenCustomer(Context context){
     return GsonHelper.GsonToCustomerToekn(getStringPreference(context,Constants.FILENAME,Constants.DECODE_USER_TOKEN)) ;
 

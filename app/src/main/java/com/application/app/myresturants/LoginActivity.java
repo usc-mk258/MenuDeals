@@ -74,6 +74,26 @@ GsonHelper gsonHelper;
             }
         });
 
+
+
+        Prefrences prefrences = new Prefrences();
+
+        String  user_id =   prefrences.getUserIdPreference(LoginActivity.this);
+       String  user_password =  prefrences.getUserPassPreference(LoginActivity.this);
+
+
+        CustomerToken customerToken=  prefrences.getTokenCustomer(LoginActivity.this);
+        if(customerToken.getRole()!=null && customerToken.getRole().equalsIgnoreCase("customer")){
+
+
+            signin(user_id,user_password,fireBaseToken);
+
+        }else {
+            signUpRestaurant(user_id,user_password);
+
+        }
+
+
         gsonHelper = new GsonHelper();
         signup_restaurant = findViewById(R.id.button2);
         getSignup_customer = findViewById(R.id.button);
@@ -82,11 +102,6 @@ GsonHelper gsonHelper;
         id = findViewById(R.id.email);
         pass = findViewById(R.id.passsword);
         radioGroup=(RadioGroup)findViewById(R.id.radio_group);
-
-
-
-
-
 
 
         button3.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +208,7 @@ private void signin(String id, String password, final String fireBaseToken){
 
 
 
-private void signUpRestaurant(String id,String password){
+private void signUpRestaurant(final String id, final String password){
     final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
     progressDialog.setCancelable(false); // set cancelable to false
     progressDialog.setMessage("Please Wait"); // set message
@@ -217,10 +232,11 @@ private void signUpRestaurant(String id,String password){
                 prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN,signUpResponsesData.getData().get("token").toString());
              Constants constants = new Constants();
                 try {
-                   String customerToken = constants.decoded(signUpResponsesData.getData().get("token").toString());
-Boolean introAdded = (Boolean) signUpResponsesData.getData().get("introAdded");
+                    String customerToken = constants.decoded(signUpResponsesData.getData().get("token").toString());
+                    Boolean introAdded = (Boolean) signUpResponsesData.getData().get("introAdded");
                     prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.DECODE_USER_TOKEN,customerToken);
-
+                    prefrences.putStringPreference(LoginActivity.this, Constants.USER_ID,Constants.DECODE_USER_TOKEN,id);
+                    prefrences.putStringPreference(LoginActivity.this, Constants.USER_PASSWORD,Constants.DECODE_USER_TOKEN,password);
                     Intent i = new Intent(LoginActivity.this, RestaurantActivity.class);
                     i.putExtra("introAdded",introAdded);
                     startActivity(i);

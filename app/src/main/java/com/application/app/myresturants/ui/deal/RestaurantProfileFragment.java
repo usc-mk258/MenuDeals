@@ -225,18 +225,6 @@ Button submit;
 
     }
 
-
-    /*
-     "description": "edittted@a12112sd.com",
-             "latitude": "24.860735",
-             "longitude": "67.001137",
-             "image_url": [
-             "data:image/png;base64,iVBORw....",
-             "data:image/png;base64,DecTGHE...."
-             ]*/
-
-
-
     private void uploadfile(File file){
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false); // set cancelable to false
@@ -256,111 +244,68 @@ Button submit;
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 signUpResponsesData = response.body();
                 if(response.code()==200 && signUpResponsesData.isSuccess()){
-                    //Prefrences prefrences = new Prefrences();
-                    // prefrences.putStringPreference(getActivity(), Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN,signUpResponsesData.getData().get(0)+"");
-                    // ArrayList<DealsModel> dealsModel = signUpResponsesData.getData();
                     imageURL = (String) signUpResponsesData.getData().get("url");
-                 //   newDeal.setImage_url(imageUrl);
-
-                    //  Toast.makeText(AddDeals.this.getApplicationContext(), "Deal Added" +orderNumber, Toast.LENGTH_SHORT).show();
-
                 }
                 else {
-
                     try {
                         Toast.makeText(getActivity(), gsonHelper.GsonJsonError(response.errorBody().string()).getMessage(), Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-
-
                 progressDialog.dismiss();
-
             }
-
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.d("response", t.getStackTrace().toString());
                 Toast.makeText(getActivity().getApplicationContext(), t.getStackTrace().toString(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
-
             }
         });
-
     }
-
-
-
 
     private void submitProfile(HashMap<String, Object> jsonParams ){
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false); // set cancelable to false
         progressDialog.setMessage("Please Wait"); // set message
         progressDialog.show();
-
-      /*  HashMap<String, Object> jsonParams = new HashMap<>();
-        //put something inside the map, could be null
-        jsonParams.put("description", deal.getDescription());
-        jsonParams.put("price", deal.getPrice());
-        jsonParams.put("image_url", deal.getImage_url());
-*/
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
-
 
         Prefrences prefrences= new Prefrences();
         HashMap<String,String> stringStringHashMap = new HashMap<>();
         stringStringHashMap.put("Content-Type","application/json;charset=UTF-8");
         stringStringHashMap.put("authorization","bearer "+prefrences.getTokenPreference(getActivity()));
         Call<LoginResponse> response = Api.getClient().saveInfo(stringStringHashMap,body );
-
         response.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 signUpResponsesData = response.body();
                 if(response.code()==200 && signUpResponsesData.isSuccess()){
-
-
-                  //  String imageUrl = (String) signUpResponsesData.getData().get("url");
-                   // newDeal.setImage_url(imageUrl);
-
-                      Toast.makeText(getActivity().getApplicationContext(), "Profile Added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Profile Added", Toast.LENGTH_SHORT).show();
                     getActivity().onBackPressed();
                 }
                 else {
-
                     try {
                         Toast.makeText(getActivity(), gsonHelper.GsonJsonError(response.errorBody().string()).getMessage(), Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-
-
                 progressDialog.dismiss();
-
             }
-
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.d("response", t.getStackTrace().toString());
                 Toast.makeText(getActivity().getApplicationContext(), t.getStackTrace().toString(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
-
             }
         });
-
     }
-
-
-
-
     private void getProfile(){
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false); // set cancelable to false
         progressDialog.setMessage("Please Wait"); // set message
         progressDialog.show();
-
         Prefrences prefrences= new Prefrences();
         HashMap<String,String> stringStringHashMap = new HashMap<>();
         stringStringHashMap.put("Content-Type","application/json;charset=UTF-8");
@@ -372,67 +317,42 @@ Button submit;
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 signUpResponsesData = response.body();
                 if(response.code()==200 && signUpResponsesData.isSuccess()){
-
-
-
                     LinkedTreeMap<String, Object> featuresFromJson =    (LinkedTreeMap<String, Object> )signUpResponsesData.getData().get("point");
-
-                 ArrayList arrayList = (ArrayList)   featuresFromJson.get("coordinates");
+                    ArrayList arrayList = (ArrayList)   featuresFromJson.get("coordinates");
                     String description = (String) signUpResponsesData.getData().get("description");
                     ArrayList images = (ArrayList) signUpResponsesData.getData().get("image_url");
-                   // newDeal.setImage_url(imageUrl);
                     descText.setText(description);
                     Glide.with(getActivity()).load(images.get(0)).centerCrop().into(imageBtn);
-
                     userLat=arrayList.get(1).toString();
                     userLng=arrayList.get(0).toString();
-                   // addMarker(arrayList.get(1).toString(),arrayList.get(0).toString());
-                     // Toast.makeText(getActivity().getApplicationContext(), "Profile Added", Toast.LENGTH_SHORT).show();
-                   // getActivity().onBackPressed();
-                }
+                    }
                 else {
-
                     try {
                         Toast.makeText(getActivity(), gsonHelper.GsonJsonError(response.errorBody().string()).getMessage(), Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-
-
                 progressDialog.dismiss();
-
             }
-
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.d("response", t.getStackTrace().toString());
                 Toast.makeText(getActivity().getApplicationContext(), t.getStackTrace().toString(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
-
             }
         });
-
     }
 
-public void addMarker(String lat,String lng){
-
+    public void addMarker(String lat,String lng){
     LatLng latLng = new LatLng(Double.parseDouble(lat),Double.parseDouble(lng));
     MarkerOptions markerOptions = new MarkerOptions();
     markerOptions.position(latLng);
     mCurrLocationMarker = mMap.addMarker(markerOptions);
-
-
     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
-    // Zoom in, animating the camera.
     mMap.animateCamera(CameraUpdateFactory.zoomIn());
-    // Zoom out to zoom level 10, animating with a duration of 2 seconds.
     mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-
-
-}
-
-
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -441,7 +361,6 @@ public void addMarker(String lat,String lng){
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
-        //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(getActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION)
@@ -484,7 +403,6 @@ public void addMarker(String lat,String lng){
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-//Showing Current Location Marker on Map
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
@@ -518,28 +436,16 @@ public void addMarker(String lat,String lng){
                 e.printStackTrace();
             }
         }
-       // markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-
-
 
        if(userLat.equals("") && userLng.equals(""))
        {
            mCurrLocationMarker = mMap.addMarker(markerOptions);
-
-
            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
-           // Zoom in, animating the camera.
            mMap.animateCamera(CameraUpdateFactory.zoomIn());
-           // Zoom out to zoom level 10, animating with a duration of 2 seconds.
-           mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-
-
+          mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
        }
 else
         addMarker(userLat,userLng);
-
-      /*  mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(18));*/
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,
                     this);
