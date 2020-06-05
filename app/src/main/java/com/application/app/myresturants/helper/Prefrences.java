@@ -32,12 +32,12 @@ public String getTokenPreference(Context context){
 }
 
 public String getUserIdPreference(Context context){
-    return getStringPreference(context,Constants.USER_ID,Constants.AUTHENTICATE_USER_TOKEN);
+    return getStringPreference(context,Constants.FILENAME,Constants.USER_ID);
 
 }
 
 public String getUserPassPreference(Context context){
-    return getStringPreference(context,Constants.USER_PASSWORD,Constants.AUTHENTICATE_USER_TOKEN);
+    return getStringPreference(context,Constants.FILENAME,Constants.USER_PASSWORD);
 
 }
 

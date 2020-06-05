@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/nav_gallery"
         android:name="com.application.app.myresturants.ui.deal.DealsFragment"
-        android:label="@string/menu_deal"
+        android:label="Home"
         tools:layout="@layout/fragment_deal" >
 
         <action

@@ -88,7 +88,7 @@ GsonHelper gsonHelper;
 
             signin(user_id,user_password,fireBaseToken);
 
-        }else {
+        }else if(customerToken.getRole()!=null && customerToken.getRole().equalsIgnoreCase("restaurant")) {
             signUpRestaurant(user_id,user_password);
 
         }
@@ -235,11 +235,12 @@ private void signUpRestaurant(final String id, final String password){
                     String customerToken = constants.decoded(signUpResponsesData.getData().get("token").toString());
                     Boolean introAdded = (Boolean) signUpResponsesData.getData().get("introAdded");
                     prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.DECODE_USER_TOKEN,customerToken);
-                    prefrences.putStringPreference(LoginActivity.this, Constants.USER_ID,Constants.DECODE_USER_TOKEN,id);
-                    prefrences.putStringPreference(LoginActivity.this, Constants.USER_PASSWORD,Constants.DECODE_USER_TOKEN,password);
+                    prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.USER_ID,id);
+                    prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.USER_PASSWORD,password);
                     Intent i = new Intent(LoginActivity.this, RestaurantActivity.class);
                     i.putExtra("introAdded",introAdded);
                     startActivity(i);
+                    LoginActivity.this.finish();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

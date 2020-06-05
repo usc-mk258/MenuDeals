@@ -1,8 +1,6 @@
 package com.application.app.myresturants.ui.deal;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,26 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.application.app.myresturants.AddDeals;
 import com.application.app.myresturants.DealAdapter;
 import com.application.app.myresturants.R;
 import com.application.app.myresturants.helper.Prefrences;
 import com.application.app.myresturants.models.CustomerToken;
-import com.application.app.myresturants.models.DealModel;
 import com.application.app.myresturants.models.RestautantModel;
 import com.application.app.myresturants.ui.main.RestaurantPagerAdapter;
-import com.application.app.myresturants.ui.main.SectionsPagerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
-import java.util.prefs.Preferences;
 
 public class DealsFragment extends Fragment {
 
