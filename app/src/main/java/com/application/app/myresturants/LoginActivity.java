@@ -9,12 +9,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.app.ProgressDialog;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -44,6 +50,11 @@ Button signup_restaurant,getSignup_customer,button3;
     TextInputEditText id,pass;
     LoginResponse signUpResponsesData;
 GsonHelper gsonHelper;
+    private static final String TAG = "abcdef";
+
+    JobScheduler jobScheduler;
+    private static final int MYJOBID = 1;
+   // Chronometer chronometer;
 
     RadioGroup radioGroup;
     private RadioButton radioButton;
@@ -56,7 +67,7 @@ GsonHelper gsonHelper;
 
 
 
-
+        updateLocation();
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setCancelable(false); // set cancelable to false
         progressDialog.setMessage("Please Wait"); // set message
@@ -83,13 +94,15 @@ GsonHelper gsonHelper;
 
 
         CustomerToken customerToken=  prefrences.getTokenCustomer(LoginActivity.this);
+
+        if(customerToken!=null)
         if(customerToken.getRole()!=null && customerToken.getRole().equalsIgnoreCase("customer")){
 
 
-            signin(user_id,user_password,fireBaseToken);
+          //  signin(user_id,user_password,fireBaseToken);
 
         }else if(customerToken.getRole()!=null && customerToken.getRole().equalsIgnoreCase("restaurant")) {
-            signUpRestaurant(user_id,user_password);
+          //  signUpRestaurant(user_id,user_password);
 
         }
 
@@ -179,6 +192,7 @@ private void signin(String id, String password, final String fireBaseToken){
                 }
                 Intent i = new Intent(LoginActivity.this, CustomerActivity.class);
                 startActivity(i);
+                LoginActivity.this.finish();
             }
             else {
 
@@ -329,6 +343,30 @@ private void signUpRestaurant(final String id, final String password){
         });
     }
 */
+
+
+
+
+    private void updateLocation(){
+        ComponentName componentName = new ComponentName(this, UpdateLocationJobService.class);
+        JobInfo jobInfo = new JobInfo.Builder(12, componentName)
+                .setPeriodic(10000)
+                .build();
+
+
+
+        JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = jobScheduler.schedule(jobInfo);
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d(TAG, "Job scheduled!");
+        } else {
+            Log.d(TAG, "Job not scheduled");
+        }
+
+
+
+
+    }
 
 
 }

@@ -54,7 +54,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:id="@+id/email"
-android:text="mcdonalds@restaurant.com"
+android:text=""
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
 
@@ -81,7 +81,7 @@ android:text="mcdonalds@restaurant.com"
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:id="@+id/passsword"
-android:text="asdasd"
+android:text=""
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
 

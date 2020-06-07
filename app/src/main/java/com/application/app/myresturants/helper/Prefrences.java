@@ -1,6 +1,7 @@
 package com.application.app.myresturants.helper;
 
 import android.app.Activity;
+import android.app.job.JobScheduler;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -28,6 +29,15 @@ public class Prefrences {
 
 public String getTokenPreference(Context context){
     return getStringPreference(context,Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN);
+
+}
+
+public void logOut(Context context){
+
+    JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+    jobScheduler.cancelAll();
+   
+   // return getStringPreference(context,Constants.FILENAME,Constants.AUTHENTICATE_USER_TOKEN);
 
 }
 

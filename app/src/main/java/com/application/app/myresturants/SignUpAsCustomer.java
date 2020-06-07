@@ -41,7 +41,7 @@ public class SignUpAsCustomer extends AppCompatActivity {
         this.getSupportActionBar().hide();
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
-        password = findViewById(R.id.passsword);
+        password = findViewById(R.id.password);
 
         getStart = (TextView) findViewById(R.id.get_start);
         gsonHelper = new GsonHelper();

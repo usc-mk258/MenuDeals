@@ -50,13 +50,19 @@ public interface ApiInterface {
 
 
 
+    @POST("customer/location")
+   // @Headers({ "Content-Type: application/json;charset=UTF-8"})
+        // API's endpoints
+    Call<LoginResponse> updateLocation(@HeaderMap Map<String, String> headers,@Body RequestBody map);
+
+
     @POST("customer/signup")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
         // API's endpoints
     Call<LoginResponse> signUpCustomer(@Body RequestBody map);
 
 
-    @POST("customer/restaurant")
+    @POST("restaurant/signup")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
         // API's endpoints
     Call<LoginResponse> signUpRestaurant(@Body RequestBody map);

@@ -40,7 +40,7 @@ TextView getStart;
         getStart = (TextView) findViewById(R.id.get_start);
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
-        password = findViewById(R.id.passsword);
+        password = findViewById(R.id.password);
         getStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
