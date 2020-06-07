@@ -80,10 +80,7 @@ public class UpdateLocationJobService extends JobService  implements   GoogleApi
         mGoogleApiClient.connect();
     }
     private void locationUpdate(String lat, String lng){
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(false); // set cancelable to false
-        progressDialog.setMessage("Please Wait"); // set message
-        progressDialog.show();
+
         HashMap<String, Object> jsonParams = new HashMap<>();
         //put something inside the map, could be null
         jsonParams.put("latitude", lat);
@@ -126,7 +123,7 @@ public class UpdateLocationJobService extends JobService  implements   GoogleApi
                 }
 
 
-                progressDialog.dismiss();
+              //  progressDialog.dismiss();
 
             }
 
@@ -134,7 +131,7 @@ public class UpdateLocationJobService extends JobService  implements   GoogleApi
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.d("response", t.getStackTrace().toString());
                 Toast.makeText(getApplicationContext(), t.getStackTrace().toString(), Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
+             //   progressDialog.dismiss();
 
             }
         });
