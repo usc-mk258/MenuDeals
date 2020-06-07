@@ -99,10 +99,10 @@ GsonHelper gsonHelper;
         if(customerToken.getRole()!=null && customerToken.getRole().equalsIgnoreCase("customer")){
 
 
-          //  signin(user_id,user_password,fireBaseToken);
+           signin(user_id,user_password,fireBaseToken);
 
         }else if(customerToken.getRole()!=null && customerToken.getRole().equalsIgnoreCase("restaurant")) {
-          //  signUpRestaurant(user_id,user_password);
+            signUpRestaurant(user_id,user_password);
 
         }
 
