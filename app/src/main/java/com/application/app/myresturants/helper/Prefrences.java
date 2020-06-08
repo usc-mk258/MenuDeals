@@ -65,7 +65,16 @@ public CustomerToken getTokenCustomer(Context context){
 
 
 
+    public void removePreference(Context context, String prefsName,
+                                    String key) {
 
+        SharedPreferences preferences = context.getSharedPreferences(prefsName,
+                Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.remove(key);
+        editor.apply();
+    }
 
 
 }

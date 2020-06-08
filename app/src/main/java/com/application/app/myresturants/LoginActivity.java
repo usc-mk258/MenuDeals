@@ -59,15 +59,24 @@ GsonHelper gsonHelper;
     RadioGroup radioGroup;
     private RadioButton radioButton;
     String fireBaseToken;
+    String  user_id,user_password;
+
+     CustomerToken customerToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.getSupportActionBar().hide();
 
+        Prefrences prefrences = new Prefrences();
+
+         user_id =   prefrences.getUserIdPreference(LoginActivity.this);
+         user_password =  prefrences.getUserPassPreference(LoginActivity.this);
 
 
-        updateLocation();
+         customerToken=  prefrences.getTokenCustomer(LoginActivity.this);
+
+
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setCancelable(false); // set cancelable to false
         progressDialog.setMessage("Please Wait"); // set message
@@ -80,31 +89,36 @@ GsonHelper gsonHelper;
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 fireBaseToken  = instanceIdResult.getToken();
                 Log.e("newToken",fireBaseToken);
+
+
+
+
+
+
                 progressDialog.dismiss();
+
+
+                if(customerToken!=null)
+                    if(customerToken.getRole()!=null && customerToken.getRole().equalsIgnoreCase("customer")){
+
+
+                        signin(user_id,user_password,fireBaseToken);
+
+                    }else if(customerToken.getRole()!=null && customerToken.getRole().equalsIgnoreCase("restaurant")) {
+                        signUpRestaurant(user_id,user_password);
+
+                    }
+
+
+
 
             }
         });
 
 
 
-        Prefrences prefrences = new Prefrences();
-
-        String  user_id =   prefrences.getUserIdPreference(LoginActivity.this);
-       String  user_password =  prefrences.getUserPassPreference(LoginActivity.this);
 
 
-        CustomerToken customerToken=  prefrences.getTokenCustomer(LoginActivity.this);
-
-        if(customerToken!=null)
-        if(customerToken.getRole()!=null && customerToken.getRole().equalsIgnoreCase("customer")){
-
-
-           signin(user_id,user_password,fireBaseToken);
-
-        }else if(customerToken.getRole()!=null && customerToken.getRole().equalsIgnoreCase("restaurant")) {
-            signUpRestaurant(user_id,user_password);
-
-        }
 
 
         gsonHelper = new GsonHelper();
@@ -162,7 +176,7 @@ else{
 
 
 
-private void signin(String id, String password, final String fireBaseToken){
+private void signin(final String id, final String password, final String fireBaseToken){
     final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
     progressDialog.setCancelable(false); // set cancelable to false
     progressDialog.setMessage("Please Wait"); // set message
@@ -187,12 +201,22 @@ private void signin(String id, String password, final String fireBaseToken){
              Constants constants = new Constants();
                 try {
                    String customerToken = constants.decoded(signUpResponsesData.getData().get("token").toString());
+
+
+
+                    prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.DECODE_USER_TOKEN,customerToken);
+                    prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.USER_ID,id);
+                    prefrences.putStringPreference(LoginActivity.this, Constants.FILENAME,Constants.USER_PASSWORD,password);
+                    Intent i = new Intent(LoginActivity.this, CustomerActivity.class);
+                    updateLocation();
+                    startActivity(i);
+                    LoginActivity.this.finish();
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Intent i = new Intent(LoginActivity.this, CustomerActivity.class);
-                startActivity(i);
-                LoginActivity.this.finish();
+
             }
             else {
 

@@ -323,6 +323,8 @@ Button submit;
                     ArrayList images = (ArrayList) signUpResponsesData.getData().get("image_url");
                     descText.setText(description);
                     Glide.with(getActivity()).load(images.get(0)).centerCrop().into(imageBtn);
+
+                    imageURL = (String) images.get(0);
                     userLat=arrayList.get(1).toString();
                     userLng=arrayList.get(0).toString();
                     }
